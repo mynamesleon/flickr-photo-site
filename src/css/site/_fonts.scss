@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "Lato";
+  src: url("../fonts/lato-regular-webfont.eot");
+  src: url("../fonts/lato-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/lato-regular-webfont.woff2") format("woff2"),
+    url("../fonts/lato-regular-webfont.woff") format("woff"),
+    url("../fonts/lato-regular-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("../fonts/lato-light-webfont.eot");
+  src: url("../fonts/lato-light-webfont.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/lato-light-webfont.woff2") format("woff2"),
+    url("../fonts/lato-light-webfont.woff") format("woff"),
+    url("../fonts/lato-light-webfont.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../fonts/lora-regular-webfont.eot");
+  src: url("../fonts/lora-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/lora-regular-webfont.woff2") format("woff2"),
+    url("../fonts/lora-regular-webfont.woff") format("woff"),
+    url("../fonts/lora-regular-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../fonts/lora-italic-webfont.eot");
+  src: url("../fonts/lora-italic-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/lora-italic-webfont.woff2") format("woff2"),
+    url("../fonts/lora-italic-webfont.woff") format("woff"),
+    url("../fonts/lora-italic-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../fonts/lora-bolditalic-webfont.eot");
+  src: url("../fonts/lora-bolditalic-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/lora-bolditalic-webfont.woff2") format("woff2"),
+    url("../fonts/lora-bolditalic-webfont.woff") format("woff"),
+    url("../fonts/lora-bolditalic-webfont.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
