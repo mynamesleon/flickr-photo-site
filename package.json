@@ -19,13 +19,18 @@
   },
   "homepage": "https://github.com/mynamesleon/photography#readme",
   "dependencies": {
+    "axios": "^0.17.1",
+    "imagefit": "^2.2.0",
+    "loaders.css": "^0.1.2",
+    "lscache": "^1.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-helmet": "^5.2.0",
+    "react-router-dom": "^4.2.2",
+    "swiper": "^4.0.7"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.3",
-    "axios": "^0.17.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
@@ -36,13 +41,9 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
-    "imagefit": "^2.2.0",
-    "loaders.css": "^0.1.2",
-    "lscache": "^1.1.0",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.9",
     "sass-loader": "^6.0.6",
-    "swiper": "^4.0.7",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
   }

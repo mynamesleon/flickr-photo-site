@@ -67,6 +67,7 @@
     &:hover,
     &:focus {
       opacity: 1;
+      outline: none;
       background: rgba(255, 255, 255, 0.075);
       color: $theme-highlight;
     }

@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import imageFit from "imagefit";
 import Loader from "./Loader";
 import HTTP from "../utils/http";
-import getPhotoName from "../utils/getPhotoName";
+import getPhotoData from "../utils/getPhotoData";
 import flickrPhotoUrl from "../utils/flickrPhotoUrl";
 import flickrdata from "../flickrdata";
 const http = new HTTP();
@@ -33,10 +33,10 @@ export default class PrimaryPhoto extends React.Component {
   }
 
   getPhotoName(id) {
-    if (!this.props.photoid || !this.props.photosetFull) {
-      return;
+    if (!id || !this.props.photosetFull) {
+      return "";
     }
-    return getPhotoName(this.props.photoid, this.props.photosetFull);
+    return getPhotoData(id, this.props.photosetFull).title;
   }
 
   // if photoid is provided, check that the photoset includes a photo with that id
@@ -85,7 +85,7 @@ export default class PrimaryPhoto extends React.Component {
     });
 
     http
-      .get("/libs/api/getPhotoSizes.php", {
+      .get(this.apiUrl, {
         PHOTO_ID: id
       })
       .then(response => {
@@ -174,6 +174,7 @@ export default class PrimaryPhoto extends React.Component {
   }
 
   componentWillReceiveProps(n) {
+    http.cancel(this.apiUrl);
     if (this._isMounted) {
       this.photoPrep(n);
     }
@@ -197,9 +198,14 @@ export default class PrimaryPhoto extends React.Component {
   render() {
     let img = "";
     let loader = "";
+    let header = "";
 
     if (this.state.notFound || !this.photoIsInPhotoset()) {
       return <Redirect to="/not-found" />;
+    }
+
+    if (this.props.photoid) {
+      let title = this.getPhotoName(this.props.photoid) || "";
     }
 
     return (

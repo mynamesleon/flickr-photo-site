@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 import HTTP from "../utils/http";
 import Loader from "./Loader";
 import PhotoSlider from "./PhotoSlider";
+import flickrdata from "../flickrdata";
+import shuffleArray from "../utils/shuffleArray";
 const http = new HTTP();
 
 export default class Photoset extends React.Component {
@@ -54,7 +56,10 @@ export default class Photoset extends React.Component {
         const photoset = response.data.photoset;
         this.setState({
           loading: false,
-          photos: photoset.photo,
+          photos:
+            flickrdata.RANDOMISE || flickrdata.RANDOMIZE
+              ? shuffleArray(photoset.photo)
+              : photoset.photo,
           title: photoset.title
         });
         if (typeof this.props.onPhotoSetLoaded === "function") {
@@ -73,6 +78,7 @@ export default class Photoset extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    http.cancel(this.apiUrl);
     this.setState({
       photosets: nextProps.photosets
     });
@@ -84,22 +90,25 @@ export default class Photoset extends React.Component {
   }
 
   render() {
-    let titleHTML = "";
+    let title = "";
     let loading = this.state.loading || this.props.photosets.length === 0;
+    let photosetBasic = this.props.photosetBasic;
+    let photosetFull = this.props.photosetFull;
     let redirect =
       this.state.notFound ||
       (this.props.photosets.length && !this.userHasPhotoset());
 
-    if (this.props.photosetBasic.title || this.props.photosetFull.title) {
-      titleHTML = (
-        <h1
+    if (photosetBasic.title || photosetFull.title) {
+      title = (
+        <div
           className={
             "photo-slider--wrapper transition__opacity" +
-            (this.props.photoid ? " fade-out" : "")
+            (this.props.photoid ? " fade-out cursor-default" : "")
           }
         >
-          {this.props.photosetBasic.title || this.props.photosetFull.title}
-        </h1>
+          <h1>{photosetBasic.title || photosetFull.title}</h1>
+          <p>{photosetBasic.description || ""}</p>
+        </div>
       );
     }
 
@@ -109,7 +118,7 @@ export default class Photoset extends React.Component {
 
     return (
       <section>
-        <div className="wrapper relative">{titleHTML}</div>
+        <div className="wrapper relative">{title}</div>
         <PhotoSlider
           loading={loading}
           photos={this.state.photos}

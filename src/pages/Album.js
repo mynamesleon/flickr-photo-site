@@ -1,4 +1,5 @@
 import React from "react";
+import SEO from "../components/SEO";
 import Photoset from "../components/Photoset";
 import PrimaryPhoto from "../components/PrimaryPhoto";
 
@@ -31,7 +32,7 @@ export default class Album extends React.Component {
       <div>
         <PrimaryPhoto {...props} />
         <Photoset
-          photoseturl={"/album/" + this.props.match.params.photosetid}
+          photoseturl={"/album/" + photosetid}
           onPhotoSetLoaded={p => {
             this.setState({
               photosetFull: p
@@ -39,6 +40,7 @@ export default class Album extends React.Component {
           }}
           {...props}
         />
+        <SEO userinfo={this.props.userinfo} {...props} />
       </div>
     );
   }

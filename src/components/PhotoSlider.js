@@ -3,7 +3,7 @@ import imageFit from "imagefit";
 import Swiper from "swiper/dist/js/swiper.js";
 import Loader from "./Loader";
 import PhotoSliderPhoto from "./PhotoSliderPhoto";
-import getPhotoName from "../utils/getPhotoName";
+import getPhotoData from "../utils/getPhotoData";
 import flickrdata from "../flickrdata";
 
 export default class PhotoSlider extends React.Component {
@@ -89,7 +89,8 @@ export default class PhotoSlider extends React.Component {
 
   render() {
     let loader = "";
-    let phototitle = getPhotoName(this.props.photoid, this.props.photosetFull);
+    let phototitle =
+      getPhotoData(this.props.photoid, this.props.photosetFull).title || "";
     let photoseturl = this.props.photoseturl;
     let images = this.props.photos.map((p, i) => {
       return (

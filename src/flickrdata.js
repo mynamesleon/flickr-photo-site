@@ -3,8 +3,11 @@ export default {
   // please include writeable cache folder within dist
   CACHE_DURATION: 30,
 
-  // preload images before attempting to display them
+  // optional - preload images before attempting to display them
   PRELOAD_IMAGES: true,
+
+  // optional - randomise display order if photos and albums
+  RANDOMISE: true,
 
   // essential!
   API_KEY: "{API_KEY}",

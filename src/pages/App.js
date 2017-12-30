@@ -3,6 +3,8 @@ import SiteHeader from "../components/SiteHeader";
 import Main from "./Main";
 import Error from "./Error";
 import HTTP from "../utils/http";
+import shuffleArray from "../utils/shuffleArray";
+import flickrdata from "../flickrdata";
 const http = new HTTP();
 
 // todo: handle primary calls failing
@@ -32,7 +34,10 @@ export default class App extends React.Component {
           return this.setFailed();
         }
         this.setState({
-          photosets: response.data.photoset
+          photosets:
+            flickrdata.RANDOMISE || flickrdata.RANDOMIZE
+              ? shuffleArray(response.data.photoset)
+              : response.data.photoset
         });
       })
       .catch(() => {

@@ -56,7 +56,8 @@ module.exports = {
     extractSass,
     new CopyWebpackPlugin([
       { from: APP_DIR + "/libs", to: BUILD_DIR + "/libs" },
-      { from: APP_DIR + "/.htaccess", to: BUILD_DIR }
+      { from: APP_DIR + "/.htaccess", to: BUILD_DIR },
+      { from: APP_DIR + "/favicons", to: BUILD_DIR }
     ]),
     new HtmlWebpackPlugin({
       template: APP_DIR + "/index.html",

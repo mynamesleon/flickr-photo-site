@@ -11,6 +11,7 @@ export default class Main extends React.Component {
   }
 
   render() {
+    let userinfo = this.props.userinfo;
     let photosets = this.props.photosets;
     return (
       <main role="main" id="main">
@@ -19,20 +20,20 @@ export default class Main extends React.Component {
             exact
             path="/"
             render={props => (
-              <Home
-                userinfo={this.props.userinfo}
-                photosets={photosets}
-                {...props}
-              />
+              <Home userinfo={userinfo} photosets={photosets} {...props} />
             )}
           />
           <Route
             path="/album/:photosetid/photo/:photoid/"
-            render={props => <Album photosets={photosets} {...props} />}
+            render={props => (
+              <Album userinfo={userinfo} photosets={photosets} {...props} />
+            )}
           />
           <Route
             path="/album/:photosetid/"
-            render={props => <Album photosets={photosets} {...props} />}
+            render={props => (
+              <Album userinfo={userinfo} photosets={photosets} {...props} />
+            )}
           />
           <Route exact path="/error" component={Error} />
           <Route component={NotFound} />
