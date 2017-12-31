@@ -11,6 +11,7 @@ export default class PrimaryPhoto extends React.Component {
   constructor(props) {
     super(props);
     this.apiUrl = "/libs/api/getPhotoSizes.php";
+    this.currentlyLoadingId = null;
     this.defaultPhotoId = 0;
     this.newImage = null;
     this.oldImage = null;
@@ -78,45 +79,57 @@ export default class PrimaryPhoto extends React.Component {
       loading: true
     });
 
+    this.currentlyLoadingId = id;
+
     http
       .get(this.apiUrl, {
         PHOTO_ID: id
       })
       .then(response => {
+        this.currentlyLoadingId = null;
         if (response.data === false) {
           return this.setState({
             notFound: true
           });
         }
 
-        let src;
+        let large;
+        let original;
         let data = response.data;
         let i = data.length;
-        let check =
-          Math.max(window.innerWidth, window.innerHeight) *
-            window.devicePixelRatio >
-          2048
-            ? "original"
-            : "2048";
 
         while (i--) {
-          if (data[i].label.toLowerCase().indexOf(check) > -1) {
-            src = data[i].source;
+          let label = data[i].label.toLowerCase();
+          if (label.indexOf("2048") > -1) {
+            large = data[i].source;
+          }
+          if (label.indexOf("original") > -1) {
+            original = data[i].source;
+          }
+          if (large && original) {
             break;
           }
         }
 
+        let srcToSet =
+          Math.max(window.innerWidth, window.innerHeight) *
+            window.devicePixelRatio >
+          2048
+            ? original
+            : large || original;
+
         if (flickrdata.PRELOAD_IMAGES) {
-          this.loadPhoto(src, id);
+          this.loadPhoto(srcToSet, id);
         } else {
           this.setState({
             loading: false,
             old: this.state.new,
-            new: this.createImage(src, id)
+            new: this.createImage(srcToSet, id)
           });
         }
       })
       .catch(err => {
+        this.currentlyLoadingId = null;
         this.setState({
           notFound: true
         });
@@ -129,6 +142,7 @@ export default class PrimaryPhoto extends React.Component {
         src={s}
         className="image-fit-img"
         alt={this.getPhotoName(i) || i}
+        id={i}
         ref={img => (this.newImage = img)}
       />
     );
@@ -156,8 +170,8 @@ export default class PrimaryPhoto extends React.Component {
   }
 
   fitImage(i) {
-    if (i && i.className.indexOf("fitted") === -1) {
-      imageFit(i);
+    if (i) {
+      imageFit(i, i.className.indexOf("fitted") === -1 ? undefined : "update");
     }
   }
 
@@ -166,16 +180,28 @@ export default class PrimaryPhoto extends React.Component {
     if (n.photosetid && n.photosets.length) {
       this.setDefaultPhotoId(n.photosets, n.photosetid);
     }
+
+    if (
+      (!photoid && this.currentlyLoadingId) ||
+      (photoid &&
+        this.state.new &&
+        this.state.new.props &&
+        this.state.new.props.id === photoid)
+    ) {
+      return;
+    }
+
     if (this.state.new) {
       this.setState({
         old: this.state.new
       });
     }
+
+    http.cancel(this.apiUrl);
     this.getPhoto(photoid || this.defaultPhotoId);
   }
 
   componentWillReceiveProps(n) {
-    http.cancel(this.apiUrl);
     if (this._isMounted) {
       this.photoPrep(n);
     }

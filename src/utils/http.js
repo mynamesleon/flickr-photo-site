@@ -57,7 +57,8 @@ export default class HTTP {
         }
       }
 
-      if (cachedData) {
+      // do not use session or locally stored data if the response was false
+      if (cachedData && cachedData.data !== false) {
         resolve(cachedData);
         return;
       }
@@ -72,10 +73,14 @@ export default class HTTP {
         .then(response => {
           this.cancelTokens[url] = null;
           resolve(response);
-          if (session && storage && !dev) {
-            storage.setItem(fullUrl, JSON.stringify(response));
+
+          // if the response is false, do not store it locally or in the session
+          if (response.data !== false) {
+            if (session && storage && !dev) {
+              storage.setItem(fullUrl, JSON.stringify(response));
+            }
+            lscache.set(fullUrl, response, options.CACHE_DURATION || 20);
           }
-          lscache.set(fullUrl, response, options.CACHE_DURATION || 20);
         })
         .catch(err => {
           this.cancelTokens[url] = null;
