@@ -9,16 +9,8 @@ export default class PhotoSliderPhoto extends React.Component {
 
   render() {
     const p = this.props.photodata;
-    const purl = this.props.photoseturl;
+    let linkUrl = this.props.photoseturl;
     const url = s => flickrPhotoUrl(p.farm, p.server, p.id, p.secret, s);
-    const srcset = [
-      url("m") + " 240w",
-      url("n") + " 320w",
-      url("z") + " 640w",
-      url("c") + " 800w",
-      url("b") + " 1024w"
-    ];
-    let linkUrl = purl;
     if (!this.props.isHomePage) {
       linkUrl += "/photo/" + p.id;
     }
@@ -26,19 +18,10 @@ export default class PhotoSliderPhoto extends React.Component {
     return (
       <NavLink to={linkUrl} className="swiper-slide">
         <div>
-          <div>
-            <figure className="image-fit-container">
-              <img
-                sizes="300px"
-                className="image-fit-img"
-                srcSet={srcset.join(", ")}
-                src={url("z")}
-                alt={p.title}
-              />
-              <figcaption>
-                <span>{p.title}</span>
-              </figcaption>
-            </figure>
+          <div style={{ backgroundImage: "url(" + url("z") + ")" }}>
+            <div className="caption">
+              <span>{p.title}</span>
+            </div>
           </div>
         </div>
       </NavLink>

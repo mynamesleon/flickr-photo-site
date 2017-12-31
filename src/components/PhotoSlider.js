@@ -1,5 +1,4 @@
 import React from "react";
-import imageFit from "imagefit";
 import Swiper from "swiper/dist/js/swiper.js";
 import Loader from "./Loader";
 import PhotoSliderPhoto from "./PhotoSliderPhoto";
@@ -62,13 +61,6 @@ export default class PhotoSlider extends React.Component {
         this.initialiseSlider();
       } else {
         this.slider.update();
-      }
-
-      let images = this.sliderElem.getElementsByClassName("image-fit-img");
-      if (images.length && images[0].className.indexOf("fitted") === -1) {
-        imageFit(images, {
-          objectFit: !flickrdata.PRELOAD_IMAGES
-        });
       }
     }
   }
@@ -139,7 +131,6 @@ export default class PhotoSlider extends React.Component {
               (this.props.loading ? " fade-out__half" : "") +
               (this.props.photos.length ? " swiper-container--bordered" : "")
             }
-            ref={elem => (this.sliderElem = elem)}
           >
             <div className="swiper-wrapper">{images}</div>
           </div>

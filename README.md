@@ -1,4 +1,4 @@
-# Flickr Photography Site
+# Flickr Photography Site - WORK IN PROGRESS
 
 A Flickr-API and PHP powered, Reactjs photography site, that can be connected to any individual Flickr account.
 

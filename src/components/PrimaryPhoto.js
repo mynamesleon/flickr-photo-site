@@ -4,7 +4,6 @@ import imageFit from "imagefit";
 import Loader from "./Loader";
 import HTTP from "../utils/http";
 import getPhotoData from "../utils/getPhotoData";
-import flickrPhotoUrl from "../utils/flickrPhotoUrl";
 import flickrdata from "../flickrdata";
 const http = new HTTP();
 
@@ -18,11 +17,6 @@ export default class PrimaryPhoto extends React.Component {
 
     this._isMounted = false;
     this._photoset = {};
-
-    this.flickrUrl = s => {
-      let p = this._photoset;
-      return flickrPhotoUrl(p.farm, p.server, p.id, p.secret, s);
-    };
 
     this.state = {
       notFound: false,
@@ -95,21 +89,30 @@ export default class PrimaryPhoto extends React.Component {
           });
         }
 
-        let original;
-        let srcset = response.data.map(i => {
-          if (i.label.toLowerCase().indexOf("original") > -1) {
-            original = i.source;
+        let src;
+        let data = response.data;
+        let i = data.length;
+        let check =
+          Math.max(window.innerWidth, window.innerHeight) *
+            window.devicePixelRatio >
+          2048
+            ? "original"
+            : "2048";
+
+        while (i--) {
+          if (data[i].label.toLowerCase().indexOf(check) > -1) {
+            src = data[i].source;
+            break;
           }
-          return `${i.source} ${i.width}w`;
-        });
+        }
 
         if (flickrdata.PRELOAD_IMAGES) {
-          this.loadPhoto(original, srcset, id);
+          this.loadPhoto(src, id);
         } else {
           this.setState({
             loading: false,
             old: this.state.new,
-            new: this.createImage(original, srcset, id)
+            new: this.createImage(src, id)
           });
         }
       })
@@ -120,11 +123,10 @@ export default class PrimaryPhoto extends React.Component {
       });
   }
 
-  createImage(o, s, i) {
+  createImage(s, i) {
     return (
       <img
-        srcSet={s.join(", ")}
-        src={o}
+        src={s}
         className="image-fit-img"
         alt={this.getPhotoName(i) || i}
         ref={img => (this.newImage = img)}
@@ -132,14 +134,14 @@ export default class PrimaryPhoto extends React.Component {
     );
   }
 
-  loadPhoto(o, s, i) {
+  loadPhoto(s, i) {
     let img = new Image();
     img.onload = () => {
       if (this._isMounted) {
         this.setState({
           loading: false,
           old: this.state.new,
-          new: this.createImage(o, s, i)
+          new: this.createImage(s, i)
         });
       }
     };
@@ -150,8 +152,7 @@ export default class PrimaryPhoto extends React.Component {
         });
       }
     };
-    img.setAttribute("srcset", s.join(", "));
-    img.setAttribute("src", o);
+    img.setAttribute("src", s);
   }
 
   fitImage(i) {

@@ -127,7 +127,7 @@
       transition: 0.5s;
     }
 
-    figcaption {
+    .caption {
       position: absolute;
       display: table;
       top: 0;
@@ -159,7 +159,7 @@
     &:hover,
     &:focus,
     &.active {
-      figcaption {
+      .caption {
         color: $theme-light;
         opacity: 1;
       }
@@ -169,6 +169,9 @@
       position: relative;
       height: 0;
       padding-bottom: 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
 
       @media screen and (max-height: $bp-xs) {
         padding-bottom: 56.25%;
