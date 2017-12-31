@@ -1,5 +1,4 @@
 import axios from "axios";
-import lscache from "lscache";
 import flickrdata from "../flickrdata";
 
 const dev = process.env.NODE_ENV === "development";
@@ -43,17 +42,12 @@ export default class HTTP {
       let cachedData;
 
       // always make full requests in dev/test
-      if (!dev) {
-        if (session && storage) {
-          // better safe than sorry
-          try {
-            cachedData = JSON.parse(storage.getItem(fullUrl));
-          } catch (err) {
-            storage.removeItem(fullUrl);
-          }
-        }
-        if (!cachedData) {
-          cachedData = lscache.get(fullUrl);
+      if (session && storage && !dev) {
+        // better safe than sorry
+        try {
+          cachedData = JSON.parse(storage.getItem(fullUrl));
+        } catch (err) {
+          storage.removeItem(fullUrl);
         }
       }
 
@@ -75,11 +69,8 @@ export default class HTTP {
           resolve(response);
 
           // if the response is false, do not store it locally or in the session
-          if (response.data !== false) {
-            if (session && storage && !dev) {
-              storage.setItem(fullUrl, JSON.stringify(response));
-            }
-            lscache.set(fullUrl, response, options.CACHE_DURATION || 20);
+          if (session && storage && !dev && response.data !== false) {
+            storage.setItem(fullUrl, JSON.stringify(response));
           }
         })
         .catch(err => {
