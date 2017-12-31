@@ -7,7 +7,7 @@ export default {
   PRELOAD_IMAGES: true,
 
   // optional - randomise display order if photos and albums
-  RANDOMISE: true,
+  RANDOMISE: false,
 
   // essential!
   API_KEY: "{API_KEY}",

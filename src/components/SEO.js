@@ -62,6 +62,10 @@ export default class SEO extends React.Component {
       url = ((w.location && w.location.origin) || "") + props.location.pathname;
     }
 
+    if (props.title) {
+      title = props.title;
+    }
+
     return <Helmet>{headTags(title, description, url, image)}</Helmet>;
   }
 }

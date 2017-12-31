@@ -1,4 +1,5 @@
 import React from "react";
+import SEO from "../components/SEO";
 
 export default class NotFound extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class NotFound extends React.Component {
             </tr>
           </tbody>
         </table>
+        <SEO title="Page not found" />
       </div>
     );
   }

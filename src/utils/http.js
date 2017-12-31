@@ -5,11 +5,17 @@ import flickrdata from "../flickrdata";
 const dev = process.env.NODE_ENV === "development";
 flickrdata.CACHE_DURATION = parseFloat(flickrdata.CACHE_DURATION) || 20;
 
-if (!flickrdata.API_KEY) {
+const dataToUse = {
+  API_KEY: flickrdata.API_KEY,
+  USER_ID: flickrdata.USER_ID,
+  CACHE_DURATION: flickrdata.CACHE_DURATION
+};
+
+if (!dataToUse.API_KEY) {
   throw new Error("Please include a Flickr API key");
 }
 
-if (!flickrdata.USER_ID) {
+if (!dataToUse.USER_ID) {
   throw new Error("Please include a Flickr user ID");
 }
 
@@ -29,11 +35,11 @@ export default class HTTP {
     return "?" + str;
   }
 
-  get(url, options = {}, session = true) {
+  get(url, opts = {}, session = true) {
     return new Promise((resolve, reject) => {
       const storage = sessionStorage;
-      const fullUrl =
-        url + this.encodeOptions(Object.assign({}, flickrdata, options));
+      const options = Object.assign({}, dataToUse, opts);
+      const fullUrl = url + this.encodeOptions(options);
       let cachedData;
 
       // always make full requests in dev/test
@@ -65,11 +71,11 @@ export default class HTTP {
         })
         .then(response => {
           this.cancelTokens[url] = null;
+          resolve(response);
           if (session && storage && !dev) {
             storage.setItem(fullUrl, JSON.stringify(response));
           }
-          lscache.set(fullUrl, response, flickrdata.CACHE_DURATION || 20);
-          resolve(response);
+          lscache.set(fullUrl, response, options.CACHE_DURATION || 20);
         })
         .catch(err => {
           this.cancelTokens[url] = null;

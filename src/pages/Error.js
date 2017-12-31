@@ -1,4 +1,5 @@
 import React from "react";
+import SEO from "../components/SEO";
 
 export default class Error extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class Error extends React.Component {
             </tr>
           </tbody>
         </table>
+        <SEO title="Something went wrong. Please try again." />
       </div>
     );
   }
