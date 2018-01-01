@@ -52,7 +52,11 @@ export default class HTTP {
       }
 
       // do not use session or locally stored data if the response was false
-      if (cachedData && cachedData.data !== false) {
+      if (
+        cachedData &&
+        cachedData.data !== false &&
+        typeof cachedData.data !== "string"
+      ) {
         resolve(cachedData);
         return;
       }
@@ -69,7 +73,13 @@ export default class HTTP {
           resolve(response);
 
           // if the response is false, do not store it locally or in the session
-          if (session && storage && !dev && response.data !== false) {
+          if (
+            session &&
+            storage &&
+            !dev &&
+            response.data !== false &&
+            typeof response.data !== "string"
+          ) {
             storage.setItem(fullUrl, JSON.stringify(response));
           }
         })
