@@ -20,6 +20,8 @@
   "homepage": "https://github.com/mynamesleon/photography#readme",
   "dependencies": {
     "axios": "^0.17.1",
+    "es6-object-assign": "^1.1.0",
+    "es6-promise": "^4.1.1",
     "imagefit": "^2.2.0",
     "loaders.css": "^0.1.2",
     "react": "^16.2.0",
@@ -36,7 +38,6 @@
     "babel-preset-react": "^6.24.1",
     "copy-webpack-plugin": "^4.3.0",
     "css-loader": "^0.28.7",
-    "es6-promise": "^4.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",

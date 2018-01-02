@@ -30,7 +30,7 @@ export default class App extends React.Component {
     http
       .get("/libs/api/getPhotosets.php")
       .then(response => {
-        if (response.data === false) {
+        if (response.data === false || typeof response.data !== "object") {
           return this.setFailed();
         }
         this.setState({
@@ -40,21 +40,21 @@ export default class App extends React.Component {
               : response.data.photoset
         });
       })
-      .catch(() => {
+      .catch(err => {
         this.setFailed();
       });
 
     http
       .get("/libs/api/getInfo.php")
       .then(response => {
-        if (response.data === false) {
+        if (response.data === false || typeof response.data !== "object") {
           return this.setFailed();
         }
         this.setState({
           userinfo: response.data
         });
       })
-      .catch(() => {
+      .catch(err => {
         this.setFailed();
       });
   }

@@ -14,7 +14,7 @@ export default class Main extends React.Component {
     let userinfo = this.props.userinfo;
     let photosets = this.props.photosets;
     return (
-      <main role="main" id="main">
+      <div id="main">
         <Switch>
           <Route
             exact
@@ -38,7 +38,7 @@ export default class Main extends React.Component {
           <Route exact path="/error" component={Error} />
           <Route component={NotFound} />
         </Switch>
-      </main>
+      </div>
     );
   }
 }

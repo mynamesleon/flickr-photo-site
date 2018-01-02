@@ -4,7 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./pages/App";
 require("./css/styles.scss");
 require("loaders.css/src/animations/ball-scale-ripple-multiple.scss");
-//require("es6-promise").polyfill();
+require("es6-object-assign").polyfill();
+require("es6-promise").polyfill();
 
 render(
   <BrowserRouter>
