@@ -114,7 +114,7 @@ if ( !class_exists('phpFlickr') ) {
 				$this->cache_dir = $connection;
 				if ($dir = opendir($this->cache_dir)) {
 					while ($file = readdir($dir)) {
-						if (substr($file, -6) == '.cache' && ((filemtime($this->cache_dir . '/' . $file) + $cache_expire) < time()) ) {
+						if (file_exists($file) && substr($file, -6) == '.cache' && ((filemtime($this->cache_dir . '/' . $file) + $cache_expire) < time()) ) {
 							unlink($this->cache_dir . '/' . $file);
 						}
 					}
