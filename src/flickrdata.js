@@ -1,5 +1,5 @@
 export default {
-  // optional - cache duration, in minutes, for file storage, and localStorage
+  // optional - cache duration in minutes for file storage
   // please include writeable cache folder within dist
   CACHE_DURATION: 30,
 

@@ -7,7 +7,7 @@ flickrdata.CACHE_DURATION = parseFloat(flickrdata.CACHE_DURATION) || 20;
 const dataToUse = {
   API_KEY: flickrdata.API_KEY,
   USER_ID: flickrdata.USER_ID,
-  CACHE_DURATION: flickrdata.CACHE_DURATION
+  CACHE_DURATION: !dev ? flickrdata.CACHE_DURATION : 0.0016 // 10 second cache in dev
 };
 
 if (!dataToUse.API_KEY) {

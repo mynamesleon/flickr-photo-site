@@ -6,3 +6,7 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
+
+<FilesMatch "\.cache$">
+  Deny from all
+</FilesMatch>
