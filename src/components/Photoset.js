@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import HTTP from "../utils/http";
 import Loader from "./Loader";
 import PhotoSlider from "./PhotoSlider";
-import flickrdata from "../flickrdata";
+import flickroptions from "../flickroptions";
 import shuffleArray from "../utils/shuffleArray";
 const http = new HTTP();
 
@@ -57,7 +57,7 @@ export default class Photoset extends React.Component {
         this.setState({
           loading: false,
           photos:
-            flickrdata.RANDOMISE || flickrdata.RANDOMIZE
+            flickroptions.RANDOMISE || flickroptions.RANDOMIZE
               ? shuffleArray(photoset.photo)
               : photoset.photo,
           title: photoset.title

@@ -1,6 +1,6 @@
 var webpack = require("webpack");
 var path = require("path");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+//var HtmlWebpackPlugin = require("html-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -15,7 +15,7 @@ const extractSass = new ExtractTextPlugin({
 module.exports = {
   entry: APP_DIR + "/index.js",
   output: {
-    filename: "bundle.js",
+    filename: "main.bundle.js",
     path: BUILD_DIR,
     publicPath: "/"
   },
@@ -57,11 +57,8 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: APP_DIR + "/libs", to: BUILD_DIR + "/libs" },
       { from: APP_DIR + "/.htaccess", to: BUILD_DIR },
-      { from: APP_DIR + "/favicons", to: BUILD_DIR }
-    ]),
-    new HtmlWebpackPlugin({
-      template: APP_DIR + "/index.html",
-      inject: "body"
-    })
+      { from: APP_DIR + "/favicons", to: BUILD_DIR },
+      { from: APP_DIR + "/index.php", to: BUILD_DIR }
+    ])
   ]
 };

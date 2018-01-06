@@ -1,22 +1,7 @@
 import axios from "axios";
-import flickrdata from "../flickrdata";
+import flickroptions from "../flickroptions";
 
 const dev = process.env.NODE_ENV === "development";
-flickrdata.CACHE_DURATION = parseFloat(flickrdata.CACHE_DURATION) || 20;
-
-const dataToUse = {
-  API_KEY: flickrdata.API_KEY,
-  USER_ID: flickrdata.USER_ID,
-  CACHE_DURATION: !dev ? flickrdata.CACHE_DURATION : 0.0016 // 10 second cache in dev
-};
-
-if (!dataToUse.API_KEY) {
-  throw new Error("Please include a Flickr API key");
-}
-
-if (!dataToUse.USER_ID) {
-  throw new Error("Please include a Flickr user ID");
-}
 
 export default class HTTP {
   constructor() {
@@ -37,7 +22,7 @@ export default class HTTP {
   get(url, opts = {}, session = true) {
     return new Promise((resolve, reject) => {
       const storage = sessionStorage;
-      const options = Object.assign({}, dataToUse, opts);
+      const options = Object.assign({}, opts);
       const fullUrl = url + this.encodeOptions(options);
       let cachedData;
 

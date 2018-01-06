@@ -8,9 +8,9 @@ A Flickr-API and PHP powered, Reactjs photography site, that can be connected to
 
 ## How to Use
 
-1. In src/flickrdata.js, include your API key and User ID
-2. In the command line, run "npm install" to download all dependencies (assuming you have [Node](https://nodejs.org/en/ "Node JS") installed)
-3. Use "npm run build" to generate the production code, which will be placed in a "dist" folder
+1. In src/index.php, include your API key and User ID in the `$apikey` and `$userid` variables respectively. You can also set the cache duration via the `$cacheduration` variable
+2. In the command line, run `npm install` to download all dependencies (assuming you have [Node](https://nodejs.org/en/ "Node JS") installed)
+3. Use `npm run build` to generate the production code, which will be placed in a "dist" folder
 
 The API responses will be cached, if possible, in a "cache" folder at the site root. It would be advisable to create this folder yourself, either directly on your server, or inside the "dist" directory before uploading it, and to ensure that the cache folder can be written to.
 

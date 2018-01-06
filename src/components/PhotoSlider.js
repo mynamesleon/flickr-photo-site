@@ -3,7 +3,6 @@ import Swiper from "swiper/dist/js/swiper.js";
 import Loader from "./Loader";
 import PhotoSliderPhoto from "./PhotoSliderPhoto";
 import getPhotoData from "../utils/getPhotoData";
-import flickrdata from "../flickrdata";
 
 export default class PhotoSlider extends React.Component {
   constructor(props) {

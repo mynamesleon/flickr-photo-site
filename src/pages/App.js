@@ -4,7 +4,7 @@ import Main from "./Main";
 import Error from "./Error";
 import HTTP from "../utils/http";
 import shuffleArray from "../utils/shuffleArray";
-import flickrdata from "../flickrdata";
+import flickroptions from "../flickroptions";
 const http = new HTTP();
 
 // todo: handle primary calls failing
@@ -35,7 +35,7 @@ export default class App extends React.Component {
         }
         this.setState({
           photosets:
-            flickrdata.RANDOMISE || flickrdata.RANDOMIZE
+            flickroptions.RANDOMISE || flickroptions.RANDOMIZE
               ? shuffleArray(response.data.photoset)
               : response.data.photoset
         });

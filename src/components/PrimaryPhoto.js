@@ -4,7 +4,7 @@ import imageFit from "imagefit";
 import Loader from "./Loader";
 import HTTP from "../utils/http";
 import getPhotoData from "../utils/getPhotoData";
-import flickrdata from "../flickrdata";
+import flickroptions from "../flickroptions";
 const http = new HTTP();
 
 export default class PrimaryPhoto extends React.Component {
@@ -118,7 +118,7 @@ export default class PrimaryPhoto extends React.Component {
             ? original
             : large || original;
 
-        if (flickrdata.PRELOAD_IMAGES) {
+        if (flickroptions.PRELOAD_IMAGES) {
           this.loadPhoto(srcToSet, id);
         } else {
           this.setState({
