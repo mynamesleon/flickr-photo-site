@@ -20,4 +20,4 @@ The API responses will be cached, if possible, in a "cache" folder at the site r
 
 Only one (obstructed, typically cropped) full-size image is displayed at any time. Smaller image variants are used for navigation, and only a maximum of 6 of these is visible on the page at any given time.
 
-Images are never stored on the server, only the API response is cached (on the server, and in session storage). No mechanism is ever provided to explicitly allow users to download the images. Additionally, all images are deliberately obstructed so that a user cannot simply right-click to save or view the images unobstructed.
+Images are never stored on the server, only the API response is cached. No mechanism is ever provided to explicitly allow users to download the images. Additionally, all images are deliberately obstructed so that a user cannot simply right-click to save or view the images unobstructed, or screenshot them.

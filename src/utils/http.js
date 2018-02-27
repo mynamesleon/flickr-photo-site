@@ -1,9 +1,7 @@
 import axios from "axios";
 import flickroptions from "../flickroptions";
 
-const dev = process.env.NODE_ENV === "development";
-
-export default class HTTP {
+class HTTP {
   constructor() {
     this.cancelTokens = {};
   }
@@ -21,30 +19,8 @@ export default class HTTP {
 
   get(url, opts = {}, session = true) {
     return new Promise((resolve, reject) => {
-      const storage = sessionStorage;
       const options = Object.assign({}, opts);
       const fullUrl = url + this.encodeOptions(options);
-      let cachedData;
-
-      // always make full requests in dev/test
-      if (session && storage && !dev) {
-        // better safe than sorry
-        try {
-          cachedData = JSON.parse(storage.getItem(fullUrl));
-        } catch (err) {
-          storage.removeItem(fullUrl);
-        }
-      }
-
-      // do not use session or locally stored data if the response was false
-      if (
-        cachedData &&
-        cachedData.data !== false &&
-        typeof cachedData.data !== "string"
-      ) {
-        resolve(cachedData);
-        return;
-      }
 
       this.cancel(url);
       this.cancelTokens[url] = axios.CancelToken.source();
@@ -56,17 +32,6 @@ export default class HTTP {
         .then(response => {
           this.cancelTokens[url] = null;
           resolve(response);
-
-          // if the response is false, do not store it locally or in the session
-          if (
-            session &&
-            storage &&
-            !dev &&
-            response.data !== false &&
-            typeof response.data !== "string"
-          ) {
-            storage.setItem(fullUrl, JSON.stringify(response));
-          }
         })
         .catch(err => {
           this.cancelTokens[url] = null;
@@ -99,3 +64,5 @@ export default class HTTP {
     }
   }
 }
+
+export default new HTTP();

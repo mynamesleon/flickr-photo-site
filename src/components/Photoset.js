@@ -1,12 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import HTTP from "../utils/http";
+import http from "../utils/http";
 import Loader from "./Loader";
 import PhotoSlider from "./PhotoSlider";
 import flickroptions from "../flickroptions";
 import shuffleArray from "../utils/shuffleArray";
-const http = new HTTP();
 
 export default class Photoset extends React.Component {
   constructor(props) {
@@ -54,12 +53,16 @@ export default class Photoset extends React.Component {
           });
         }
         const photoset = response.data.photoset;
+        const photos =
+          flickroptions.ORDERING === "random"
+            ? shuffleArray(photoset.photo)
+            : flickroptions.ORDERING === "reverse"
+              ? photoset.photo.reverse()
+              : photoset.photo;
+
         this.setState({
           loading: false,
-          photos:
-            flickroptions.RANDOMISE || flickroptions.RANDOMIZE
-              ? shuffleArray(photoset.photo)
-              : photoset.photo,
+          photos: photos,
           title: photoset.title
         });
         if (typeof this.props.onPhotoSetLoaded === "function") {
@@ -78,7 +81,6 @@ export default class Photoset extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    http.cancel(this.apiUrl);
     this.setState({
       photosets: nextProps.photosets
     });

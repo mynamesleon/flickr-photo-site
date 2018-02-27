@@ -2,10 +2,9 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import imageFit from "imagefit";
 import Loader from "./Loader";
-import HTTP from "../utils/http";
+import http from "../utils/http";
 import getPhotoData from "../utils/getPhotoData";
 import flickroptions from "../flickroptions";
-const http = new HTTP();
 
 export default class PrimaryPhoto extends React.Component {
   constructor(props) {
@@ -197,7 +196,6 @@ export default class PrimaryPhoto extends React.Component {
       });
     }
 
-    http.cancel(this.apiUrl);
     this.getPhoto(photoid || this.defaultPhotoId);
   }
 

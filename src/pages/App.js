@@ -2,12 +2,9 @@ import React from "react";
 import SiteHeader from "../components/SiteHeader";
 import Main from "./Main";
 import Error from "./Error";
-import HTTP from "../utils/http";
+import http from "../utils/http";
 import shuffleArray from "../utils/shuffleArray";
 import flickroptions from "../flickroptions";
-const http = new HTTP();
-
-// todo: handle primary calls failing
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,7 +32,7 @@ export default class App extends React.Component {
         }
         this.setState({
           photosets:
-            flickroptions.RANDOMISE || flickroptions.RANDOMIZE
+            flickroptions.ORDERING === "random"
               ? shuffleArray(response.data.photoset)
               : response.data.photoset
         });

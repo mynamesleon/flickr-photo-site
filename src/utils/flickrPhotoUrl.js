@@ -4,6 +4,9 @@ export default (f, s, i, se, size) => {
   let u = url;
   let p = { f, s, i, se, size };
   for (let e in p) {
+    if (typeof p[e] === "undefined") {
+      return "";
+    }
     u = u.replace("{" + e + "}", p[e]);
   }
   return u;
