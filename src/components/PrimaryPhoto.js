@@ -4,6 +4,7 @@ import imageFit from "imagefit";
 import Loader from "./Loader";
 import http from "../utils/http";
 import getPhotoData from "../utils/getPhotoData";
+import closestNumber from "../utils/closestNumber";
 import flickroptions from "../flickroptions";
 
 export default class PrimaryPhoto extends React.Component {
@@ -92,30 +93,24 @@ export default class PrimaryPhoto extends React.Component {
           });
         }
 
-        let large;
-        let original;
         let data = response.data;
         let i = data.length;
+        let sizesObj = {};
+        let sizesArr = [];
 
         while (i--) {
-          let label = data[i].label.toLowerCase();
-          if (label.indexOf("2048") > -1) {
-            large = data[i].source;
-          }
-          if (label.indexOf("original") > -1) {
-            original = data[i].source;
-          }
-          if (large && original) {
-            break;
-          }
+          let width = data[i].width;
+          sizesArr.push(width);
+          sizesObj[width] = data[i].source;
         }
 
         let srcToSet =
-          Math.max(window.innerWidth, window.innerHeight) *
-            window.devicePixelRatio >
-          2048
-            ? original
-            : large || original;
+          sizesObj[
+            closestNumber(
+              Math.max(window.innerWidth, window.innerHeight),
+              sizesArr
+            )
+          ];
 
         if (flickroptions.PRELOAD_IMAGES) {
           this.loadPhoto(srcToSet, id);
