@@ -104,13 +104,10 @@ export default class PrimaryPhoto extends React.Component {
           sizesObj[width] = data[i].source;
         }
 
+        let widthOrHeight = Math.max(window.innerWidth, window.innerHeight);
+        let considerRetina = window.devicePixelRatio > 1 ? 1.5 : 1;
         let srcToSet =
-          sizesObj[
-            closestNumber(
-              Math.max(window.innerWidth, window.innerHeight),
-              sizesArr
-            )
-          ];
+          sizesObj[closestNumber(widthOrHeight * considerRetina, sizesArr)];
 
         if (flickroptions.PRELOAD_IMAGES) {
           this.loadPhoto(srcToSet, id);
